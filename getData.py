@@ -46,7 +46,24 @@ class TA:
 
 		return 0
 
+	def stochastics(self,days):
+		""" Stochastics formula from here: http://www.ehow.com/how_5131646_calculate-stochastics-make-stochastic-oscillator.html """ 
+
+		L = float(min(self.data_dict['Low'][-days:]))
+		H = float(max(self.data_dict['High'][-days:]))
+		pctK = list(self.data_dict['Close'][-days:])
+		K = [100*((float(i)-L)/(H-L)) for i in pctK]
+                D = (sum(K[-3:])/3)
+		print K, D
+
+		return (K,D)
+
+	def parabolicSAR(self):
+		""" Parabolic SAR formula from here: http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:parabolic_sar """
+		return 0
+
 if __name__ == "__main__":
 	DD = Data('ilmn',2004,2009)
 	T = TA(DD)
 	T.pivotPoints()
+	T.stochastics(14)

@@ -3,17 +3,24 @@ import urllib2
 class Data:
 	def __init__(self, ticker, start, end):
 		self.data = self.csvToDict(self.fromYahoo(ticker,start,end))
+		self.properties = self.getProperties() #prints automatically
 	def fromYahoo(self,sym, start, end):
 		url = 'http://ichart.finance.yahoo.com/table.csv?d=6&e=1&f='+str(end)+'&g=d&a=7&b=19&c='+str(start)+'&ignore=.csv&s='+sym
 		response = urllib2.urlopen(url)
 		csv = response.read()
 		return csv
 	def csvToDict(self,csvfile):
-		new = []
+		temp = []
+		new_dict = {}
 		for i in csvfile.strip('\n').split('\n'):
-			print i.split(',')
+			temp.append(i.split(','))
+		for i in zip(*temp):
+			new_dict[i[0]] = list(i[1:])
+		return new_dict
+	def getProperties(self):
+		print [(i,len(self.data[i])) for i in self.data]
+		return 0
 
 if __name__ == "__main__":
 	print "hello"
 	DD = Data('ilmn',2004,2009)
-	print DD.data

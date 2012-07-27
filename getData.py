@@ -21,6 +21,32 @@ class Data:
 		print [(i,len(self.data[i])) for i in self.data]
 		return 0
 
+class TA:
+	def __init__(self, dataObj):
+		print 'technical analysis class'
+		self.data_dict = dataObj.data
+	def pivotPoints(self):
+		""" Formula from investopedia: http://www.investopedia.com/articles/technical/04/041404.asp#axzz21qPfzx5O
+		R2 = P+(H-L)
+		R1 = (P*2)-L
+		P = (H+L+C)/3
+		S1 = (P*2)-H
+		S2 = P-(H-L) """
+
+		H = float(self.data_dict['High'][-1])
+		L = float(self.data_dict['Low'][-1])
+		C = float(self.data_dict['Close'][-1])
+		P = (H+L+C)/3
+		R2 = P+(H-L)
+                R1 = (P*2)-L
+		S1 = (P*2)-H
+                S2 = P-(H-L)
+
+		print (R2,R1,P,S1,S2)
+
+		return 0
+
 if __name__ == "__main__":
-	print "hello"
 	DD = Data('ilmn',2004,2009)
+	T = TA(DD)
+	T.pivotPoints()

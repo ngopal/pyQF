@@ -54,7 +54,6 @@ class TA:
 		pctK = list(self.data_dict['Close'][-days:])
 		K = [100*((float(i)-L)/(H-L)) for i in pctK]
                 D = (sum(K[-3:])/3)
-		print K, D
 
 		return (K,D)
 
